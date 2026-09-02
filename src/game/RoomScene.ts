@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // RoomScene — мансарда на PixiJS: мольберт, дверь, ПК, стол, кот,
 // день/ночь за окном, курьер с посылкой, картины на стене.
 // ExhibitionScene — сцена выставки в галерее.
@@ -23,16 +23,14 @@ function gradTex(w: number, h: number, stops: [number, string][]) {
   return Texture.from(c);
 }
 function radialTex(size: number, color: string) {
-  // Округляем размер вверх до ближайшей степени двойки
-  const s = Math.pow(2, Math.ceil(Math.log2(size)));
   const c = document.createElement('canvas');
-  c.width = c.height = s;
+  c.width = c.height = size;
   const ctx = c.getContext('2d')!;
-  const g = ctx.createRadialGradient(s / 2, s / 2, 2, s / 2, s / 2, s / 2);
+  const g = ctx.createRadialGradient(size / 2, size / 2, 2, size / 2, size / 2, size / 2);
   g.addColorStop(0, color);
   g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g;
-  ctx.fillRect(0, 0, s, s);
+  ctx.fillRect(0, 0, size, size);
   return Texture.from(c);
 }
 
@@ -502,10 +500,10 @@ export class RoomScene {
       this.zzz.alpha = 0;
       this.fit.addChild(this.zzz);
     }
-   if (this.zzz) {
-     this.zzz.alpha = Math.sin(this.t * 1.5) * 0.5 + 0.5;
-     this.zzz.y = 560 - ((this.t * 8) % 26);
-     if (this.zzzTimer > 8) { this.zzz.destroy(); this.zzz = null; this.zzzTimer = 0; }
+    if (this.zzz) {
+      this.zzz.alpha = Math.sin(this.t * 1.5) * 0.5 + 0.5;
+      this.zzz.y = 560 - ((this.t * 8) % 26);
+      if (this.zzzTimer > 8) { this.zzz.destroy(); this.zzz = null; this.zzzTimer = 0; }
     }
     // экран ПК
     this.flickTimer += dt;
